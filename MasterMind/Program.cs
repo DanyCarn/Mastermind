@@ -23,13 +23,13 @@ namespace MasterMind
             int ok = 0;
             int badPosition = 0;
             bool quit = false;
+            bool goodLenght = false;
              //message de bienvenue
             Console.WriteLine("Bienvenue sur Mastermind!");
             do
             {
                 Console.WriteLine("Couleurs possibles: GYWRBMC");
                 Console.WriteLine("Devine le code en 4 couleurs. \n");
-
                 //génère la suite à deviner aléatoirement
                 Random random = new Random();
                 int number1 = random.Next(6);
@@ -134,35 +134,43 @@ namespace MasterMind
                         break;
 
                 }
-
-
-
                 //le joueur rentre une suite et la console compare avec la suite à deviner et lui répond ensuite si c'est juste ou faux
                 for (tries = 1; tries < 11; ++tries)
                 {
-                    Console.Write("Essai " + tries + ": ");
-                    guess = Console.ReadLine();
+                    do
+                    {
+                        //vérifie que ce que l'utilisateur rentre fasse la bonne longueur. Si non, demande à l'utilisateur de re-rentrer un essai
+                        goodLenght = false;
+                        Console.Write("Essai " + tries + ": ");
+                        guess = Console.ReadLine();
+                        if (guess.Length == guessArray.Length)
+                            goodLenght = true;
+                        else
+                            Console.WriteLine("Votre essai doit faire 4 charactères");
+
+                    } while (goodLenght == false);
                     guessArray = guess.ToCharArray();
                     ok = 0;
                     badPosition = 0;
-                    /*Console.WriteLine(goal);*/
+                    Console.WriteLine(goal);
 
                     //La console compare l'essai de l'utilisateur et le code généré aléatoirement. Si une lettre est au bon emplacement,
                     for (int i = 0; i < 4; i++)
                     {
-                        if (guessArray[i] == goal[i])
-                            ok++;
-
-                        else
-                        {
-                            foreach (char c in goal)
+                            if (guessArray[i] == goal[i])
                             {
-                                if (c == guessArray[i])
-                                    badPosition++;
+                                    ok++;
                             }
-                        }
+                            else
+                            {
+                                foreach (char j in goal)
+                                {
+                                    if (j == guessArray[i])
+                                        badPosition++;                                    
+                                }
+                            }
                     }
-                    //si les 4 lettres sont bonnes, le programme félicite le joueur et s'arrête
+                    //si les 4 lettres sont bonnes, le programme félicite le joueur
                     if (ok == 4)
                     {
                         Console.WriteLine("Bravo !");
@@ -171,6 +179,17 @@ namespace MasterMind
                     Console.WriteLine("=>Ok: " + ok);
                     Console.WriteLine("=>Mauvaise position: " + badPosition + "\n");
                 }
+                //si tous les essais sont épuisée, la console révèle le code caché
+                if (tries == 11)
+                {
+                    Console.Write("Vous avez perdu, le code était ");
+                    foreach(char item in goal)
+                    {
+                        Console.Write(item.ToString());
+                    }
+                }
+                Console.WriteLine();
+                //La console demande au joueur si il veut rejouer qui répondra "o" s'il souhaite rejouer et "n" s'il souhaite arrêter
                 Console.WriteLine("Voulez-vous rejouer ? (o/n)");
                 string restart = Console.ReadLine();
                 if (restart == "n")
