@@ -18,7 +18,7 @@ namespace MasterMind
         {
             char[] goal = new char[4];
             char[] guessArray = new char[4];
-            char[] notOk = new char[4];
+            char[] notOk = new char[4] {'_','_','_','_'};
             int tries;
             string guess;
             int ok = 0;
@@ -56,6 +56,7 @@ namespace MasterMind
             //mode normal
             void normalMode()
             {
+                Console.Clear();
                 do
                 {
                     Console.WriteLine("Couleurs possibles: GYWRBMC");
@@ -185,7 +186,10 @@ namespace MasterMind
                         Console.WriteLine(goal);
 
                         //La console compare l'essai de l'utilisateur et le code généré aléatoirement. Si une lettre est au bon emplacement.
-                        notOk = guessArray;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            notOk[i] = '_';
+                        }
                         for (int i = 0; i < 4; i++)
                         {
                             if (guessArray[i] == goal[i])
@@ -195,20 +199,26 @@ namespace MasterMind
                             }
                             else
                             {
-                                foreach(char j in goal)
-                                    if(j != guessArray[i])
+
+                                for (int j = 0; j < goal.Length; j++)
+                                {
+                                    if (/*guessArray[j] != goal[j] && *//*lettre ok*/ goal[j] == guessArray[i])
                                     {
-                                        notOk[i] = '_';
+                                        notOk[i] = guessArray[i];
                                     }
-                                        
+                                   
+
+                                } 
                             }
                         }
+
 
                         foreach (char j in notOk)
                         {
                             if (j != '_')
                             {
                                 badPosition++;
+                                break;
                             }
 
                         }
@@ -241,6 +251,7 @@ namespace MasterMind
             //mode facile
             void easyMode()
             {
+                Console.Clear();
                 do
                 {
                     Console.WriteLine("Couleurs possibles: GYWRBMC");
@@ -385,17 +396,21 @@ namespace MasterMind
                                 easyDisplay[i] = goal[i];
                             }
                             else
-                            //si la lettre n'est pas ok ni est présente dans le code, un _ est placé dans le tableau pour vérifier quelles couleurs sont mal placées
+                            //si la lettre n'est pas ok ni est présente dans le code, un "_" est placé dans le tableau pour vérifier quelles couleurs sont mal placées
                             {
                                 foreach (char j in goal)
+                                {
                                     if (j != guessArray[i])
                                     {
                                         notOk[i] = '_';
                                     }
+
+                                }
+                                    
                             }
                         }
                         //place un $ si la couleur est mal placée
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0 ; i < 4; i++)
                         {
                             if (notOk[i] != '_')
                             {
@@ -408,7 +423,7 @@ namespace MasterMind
                             Console.WriteLine("Bravo !");
                             break;
                         }
-                        Console.WriteLine("Réponse [$=bonne couleur]: " + easyDisplay[0] + easyDisplay[1] + easyDisplay[2] + easyDisplay[3]);
+                        Console.Write("Réponse [$=bonne couleur]: " + easyDisplay[0] + easyDisplay[1] + easyDisplay[2] + easyDisplay[3]);
                     }
                     //si tous les essais sont épuisée, la console révèle le code caché
                     if (tries == 11)
