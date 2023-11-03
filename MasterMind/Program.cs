@@ -184,8 +184,8 @@ namespace MasterMind
                             guessArray = guess.ToCharArray();
                             ok = 0;
                             badPosition = 0;
-                            Console.Write(goal);
-                            Console.WriteLine(" (Seulement pour le test)");
+                            //Console.Write(goal);
+                            //Console.WriteLine(" (Seulement pour le test)");
                             //La console compare l'essai de l'utilisateur et le code généré aléatoirement. Si une lettre est au bon emplacement, ajoute 1 a la variable ok.
                             for (int i = 0; i < 4; i++)
                             {
@@ -384,8 +384,8 @@ namespace MasterMind
                             guessArray = guess.ToCharArray();
                             ok = 0;
                             badPosition = 0;
-                            Console.Write(goal);
-                            Console.WriteLine(" (Seulement pour le test)");
+                            //Console.Write(goal);
+                            //Console.WriteLine(" (Seulement pour le test)");
                             //La console compare l'essai de l'utilisateur et le code généré aléatoirement. Si une lettre est au bon emplacement, il la rajoute dans l'affichage.
                             for (int i = 0; i < 4; i++)
                             {
@@ -432,6 +432,7 @@ namespace MasterMind
                                 Console.WriteLine("Bravo !");
                                 break;
                             }
+                            Console.Write("Réponse [$=bonne couleur]: ");
                             for (int i = 0; i < 4; i++)
                             {
                                 switch (easyDisplay[i])
